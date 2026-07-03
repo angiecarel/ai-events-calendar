@@ -6,370 +6,375 @@
 <title>AI Events &amp; Learning Opportunities</title>
 <meta name="description" content="A curated calendar of AI events, workshops, conferences, and free learning opportunities across Indiana and the Midwest.">
 <style>
-  :root {
-    color-scheme: light;
-    --bg: #faf9f7; --card: #fff; --ink: #1f1e1c; --muted: #6f6b64;
-    --line: #e6e2db; --accent: #b3541e;
-    --inperson: #2563eb; --virtual: #16803c; --hybrid: #7c3aed; --ondemand: #b45309;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); font-size: 15px; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 24px 16px 48px; }
-  header.top h1 { font-size: 26px; font-weight: 800; }
-  header.top p.sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
+:root {
+color-scheme: light;
+--bg: #faf9f7; --card: #fff; --ink: #1f1e1c; --muted: #6f6b64;
+--line: #e6e2db; --accent: #b3541e;
+--inperson: #2563eb; --virtual: #16803c; --hybrid: #7c3aed; --ondemand: #b45309;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); font-size: 15px; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 24px 16px 48px; }
+header.top h1 { font-size: 26px; font-weight: 800; }
+header.top p.sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
 
-  .bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 18px 0 8px; }
-  .vswitch { display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-  .vbtn { border: none; background: var(--card); color: var(--ink); padding: 6px 13px; font-size: 13px; cursor: pointer; font-family: inherit; border-right: 1px solid var(--line); }
-  .vbtn:last-child { border-right: none; }
-  .vbtn.active { background: var(--ink); color: #fff; }
-  .nav { display: flex; align-items: center; gap: 6px; }
-  .nav button { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 8px; padding: 6px 12px; font-size: 14px; cursor: pointer; font-family: inherit; }
-  .nav button:hover { border-color: var(--accent); color: var(--accent); }
-  #label { font-size: 15px; font-weight: 600; min-width: 160px; text-align: center; }
-  .toplink { font-size: 13.5px; color: var(--accent); font-weight: 600; text-decoration: none; margin-left: auto; }
-  .toplink:hover { text-decoration: underline; }
-  .legend { display: flex; gap: 12px; font-size: 12px; color: var(--muted); flex-wrap: wrap; margin: 0 0 12px; }
-  .legend span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
-  .legend .lp::before { background: var(--inperson); }
-  .legend .lv::before { background: var(--virtual); }
-  .legend .lh::before { background: var(--hybrid); }
-  .legend .lmd::before { display: none; }
+.bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 18px 0 8px; }
+.vswitch { display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.vbtn { border: none; background: var(--card); color: var(--ink); padding: 6px 13px; font-size: 13px; cursor: pointer; font-family: inherit; border-right: 1px solid var(--line); }
+.vbtn:last-child { border-right: none; }
+.vbtn.active { background: var(--ink); color: #fff; }
+.nav { display: flex; align-items: center; gap: 6px; }
+.nav button { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 8px; padding: 6px 12px; font-size: 14px; cursor: pointer; font-family: inherit; }
+.nav button:hover { border-color: var(--accent); color: var(--accent); }
+#label { font-size: 15px; font-weight: 600; min-width: 160px; text-align: center; }
+.toplink { font-size: 13.5px; color: var(--accent); font-weight: 600; text-decoration: none; margin-left: auto; }
+.toplink:hover { text-decoration: underline; }
+.legend { display: flex; gap: 12px; font-size: 12px; color: var(--muted); flex-wrap: wrap; margin: 0 0 12px; }
+.legend span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
+.legend .lp::before { background: var(--inperson); }
+.legend .lv::before { background: var(--virtual); }
+.legend .lh::before { background: var(--hybrid); }
+.legend .lmd::before { display: none; }
 
-  /* month view — square day cells */
-  .grid { display: grid; grid-template-columns: repeat(7, 1fr); background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; gap: 1px; }
-  .dow { background: #f1eee9; padding: 6px 4px; text-align: center; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
-  .day { background: var(--card); aspect-ratio: 1 / 1; padding: 4px; overflow: hidden; min-width: 0; }
-  .day.out { background: #f7f5f2; }
-  .day .num { font-size: 12px; color: var(--muted); padding: 2px 4px; display: inline-block; }
-  .day.today .num { background: var(--accent); color: #fff; border-radius: 999px; min-width: 21px; text-align: center; font-weight: 700; }
-  .chip { display: block; width: 100%; text-align: left; border: none; cursor: pointer; font-size: 10.5px; line-height: 1.25; padding: 2px 5px; border-radius: 4px; margin-top: 2px; color: #fff; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: inherit; }
-  .chip.inperson { background: var(--inperson); }
-  .chip.virtual { background: var(--virtual); }
-  .chip.hybrid { background: var(--hybrid); }
-  .chip.cont { opacity: .65; }
-  .more { background: none; border: none; color: var(--muted); font-size: 10.5px; cursor: pointer; padding: 2px 5px; font-family: inherit; font-weight: 600; }
-  .more:hover { color: var(--accent); }
+/* month view — square day cells */
+.grid { display: grid; grid-template-columns: repeat(7, 1fr); background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; gap: 1px; }
+.dow { background: #f1eee9; padding: 6px 4px; text-align: center; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.day { background: var(--card); aspect-ratio: 1 / 1; padding: 4px; overflow: hidden; min-width: 0; }
+.day.out { background: #f7f5f2; }
+.day .num { font-size: 12px; color: var(--muted); padding: 2px 4px; display: inline-block; }
+.day.today .num { background: var(--accent); color: #fff; border-radius: 999px; min-width: 21px; text-align: center; font-weight: 700; }
+.chip { display: block; width: 100%; text-align: left; border: none; cursor: pointer; font-size: 10.5px; line-height: 1.25; padding: 2px 5px; border-radius: 4px; margin-top: 2px; color: #fff; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: inherit; }
+.chip.inperson { background: var(--inperson); }
+.chip.virtual { background: var(--virtual); }
+.chip.hybrid { background: var(--hybrid); }
+.chip.cont { opacity: .65; }
+.more { background: none; border: none; color: var(--muted); font-size: 10.5px; cursor: pointer; padding: 2px 5px; font-family: inherit; font-weight: 600; }
+.more:hover { color: var(--accent); }
 
-  /* day / 3-day / week views */
-  .cols { display: grid; gap: 10px; }
-  .col { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px; min-height: 220px; min-width: 0; }
-  .col h3 { font-size: 12px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 10px; }
-  .col.today h3 { color: var(--accent); }
-  .ecard { display: block; width: 100%; border: 1px solid var(--line); border-left-width: 4px; border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; cursor: pointer; background: var(--card); text-align: left; font-family: inherit; }
-  .ecard:hover { border-color: var(--accent); border-left-color: inherit; }
-  .ecard .t { font-size: 13px; font-weight: 600; line-height: 1.35; }
-  .ecard .m { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
-  .empty { font-size: 12px; color: var(--muted); font-style: italic; }
+/* day / 3-day / week views */
+.cols { display: grid; gap: 10px; }
+.col { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px; min-height: 220px; min-width: 0; }
+.col h3 { font-size: 12px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 10px; }
+.col.today h3 { color: var(--accent); }
+.ecard { display: block; width: 100%; border: 1px solid var(--line); border-left-width: 4px; border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; cursor: pointer; background: var(--card); text-align: left; font-family: inherit; }
+.ecard:hover { border-color: var(--accent); border-left-color: inherit; }
+.ecard .t { font-size: 13px; font-weight: 600; line-height: 1.35; }
+.ecard .m { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+.empty { font-size: 12px; color: var(--muted); font-style: italic; }
 
-  .section-title { font-size: 13px; font-weight: 700; margin: 26px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-  .list { display: flex; flex-direction: column; gap: 8px; }
-  .item { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; cursor: pointer; display: flex; gap: 12px; align-items: baseline; text-align: left; font-family: inherit; font-size: 14px; width: 100%; }
-  .item:hover { border-color: var(--accent); }
-  .item .d { font-weight: 700; font-size: 13px; color: var(--accent); white-space: nowrap; min-width: 84px; }
-  .item .n { font-weight: 600; }
-  .item .f { font-size: 12px; color: var(--muted); margin-left: auto; white-space: nowrap; }
-  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
-  .pill { border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 7px 11px; font-size: 13px; cursor: pointer; font-family: inherit; text-align: left; }
-  .pill:hover { border-color: var(--ondemand); }
-  .pill .tag { color: var(--ondemand); font-weight: 700; margin-right: 6px; font-size: 11px; }
-  .pill .added { color: var(--muted); font-size: 11px; margin-left: 6px; }
+.section-title { font-size: 13px; font-weight: 700; margin: 26px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.list { display: flex; flex-direction: column; gap: 8px; }
+.item { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; cursor: pointer; display: flex; gap: 12px; align-items: baseline; text-align: left; font-family: inherit; font-size: 14px; width: 100%; }
+.item:hover { border-color: var(--accent); }
+.item .d { font-weight: 700; font-size: 13px; color: var(--accent); white-space: nowrap; min-width: 84px; }
+.item .n { font-weight: 600; }
+.item .f { font-size: 12px; color: var(--muted); margin-left: auto; white-space: nowrap; }
+.pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 7px 11px; font-size: 13px; cursor: pointer; font-family: inherit; text-align: left; }
+.pill:hover { border-color: var(--ondemand); }
+.pill .tag { color: var(--ondemand); font-weight: 700; margin-right: 6px; font-size: 11px; }
+.pill .added { color: var(--muted); font-size: 11px; margin-left: 6px; }
 
-  #overlay { position: fixed; inset: 0; background: rgba(30,28,25,.35); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 50; }
-  #overlay.show { display: flex; }
-  #detail { background: var(--card); border-radius: 12px; max-width: 480px; width: 100%; padding: 22px; box-shadow: 0 12px 40px rgba(0,0,0,.18); max-height: 82vh; overflow: auto; position: relative; }
-  #detail h2 { font-size: 17px; margin-bottom: 10px; padding-right: 26px; }
-  #detail .meta { font-size: 13.5px; color: var(--muted); margin-bottom: 4px; }
-  #detail .meta b { color: var(--ink); font-weight: 600; }
-  #detail p.desc { font-size: 13.5px; margin: 10px 0; line-height: 1.55; }
-  #detail .links { margin-top: 14px; }
-  #detail .links a { font-size: 13.5px; color: var(--accent); text-decoration: none; font-weight: 600; border: 1px solid var(--line); border-radius: 8px; padding: 7px 14px; display: inline-block; }
-  #detail .links a:hover { border-color: var(--accent); }
-  #detail .nolink { font-size: 12.5px; color: var(--muted); font-style: italic; margin-top: 12px; }
-  #closeBtn { position: absolute; background: none; border: none; font-size: 18px; cursor: pointer; color: var(--muted); right: 14px; top: 12px; }
-  .fmt-badge { display: inline-block; font-size: 11px; font-weight: 700; color: #fff; border-radius: 5px; padding: 2px 7px; margin-bottom: 8px; }
-  footer { margin-top: 36px; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
+#overlay { position: fixed; inset: 0; background: rgba(30,28,25,.35); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 50; }
+#overlay.show { display: flex; }
+#detail { background: var(--card); border-radius: 12px; max-width: 480px; width: 100%; padding: 22px; box-shadow: 0 12px 40px rgba(0,0,0,.18); max-height: 82vh; overflow: auto; position: relative; }
+#detail h2 { font-size: 17px; margin-bottom: 10px; padding-right: 26px; }
+#detail .meta { font-size: 13.5px; color: var(--muted); margin-bottom: 4px; }
+#detail .meta b { color: var(--ink); font-weight: 600; }
+#detail p.desc { font-size: 13.5px; margin: 10px 0; line-height: 1.55; }
+#detail .links { margin-top: 14px; }
+#detail .links a { font-size: 13.5px; color: var(--accent); text-decoration: none; font-weight: 600; border: 1px solid var(--line); border-radius: 8px; padding: 7px 14px; display: inline-block; }
+#detail .links a:hover { border-color: var(--accent); }
+#detail .nolink { font-size: 12.5px; color: var(--muted); font-style: italic; margin-top: 12px; }
+#closeBtn { position: absolute; background: none; border: none; font-size: 18px; cursor: pointer; color: var(--muted); right: 14px; top: 12px; }
+.fmt-badge { display: inline-block; font-size: 11px; font-weight: 700; color: #fff; border-radius: 5px; padding: 2px 7px; margin-bottom: 8px; }
+footer { margin-top: 36px; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="top">
-    <h1>📅 AI Events &amp; Learning Opportunities</h1>
-    <p class="sub">Workshops, conferences, meetups, and free courses across Indiana &amp; the Midwest — curated by Angie Carel.</p>
-  </header>
+<header class="top">
+<h1>📅 AI Events &amp; Learning Opportunities</h1>
+<p class="sub">Workshops, conferences, meetups, and free courses across Indiana &amp; the Midwest — curated by Angie Carel.</p>
+</header>
 
-  <div class="bar">
-    <div class="vswitch" id="vswitch">
-      <button class="vbtn" data-v="day">Day</button>
-      <button class="vbtn" data-v="3day">3 Days</button>
-      <button class="vbtn" data-v="week">Week</button>
-      <button class="vbtn" data-v="month">Month</button>
-    </div>
-    <div class="nav">
-      <button id="prev" aria-label="Previous">‹</button>
-      <span id="label"></span>
-      <button id="next" aria-label="Next">›</button>
-      <button id="todayBtn">Today</button>
-    </div>
-    <a class="toplink" href="#tbd">TBD &amp; On-Demand ↓</a>
-  </div>
-  <div class="legend"><span class="lp">In-Person</span><span class="lv">Virtual</span><span class="lh">Hybrid</span><span class="lmd">↳ = multi-day event, continued from its start date</span></div>
+<div class="bar">
+<div class="vswitch" id="vswitch">
+<button class="vbtn" data-v="day">Day</button>
+<button class="vbtn" data-v="3day">3 Days</button>
+<button class="vbtn" data-v="week">Week</button>
+<button class="vbtn" data-v="month">Month</button>
+</div>
+<div class="nav">
+<button id="prev" aria-label="Previous">‹</button>
+<span id="label"></span>
+<button id="next" aria-label="Next">›</button>
+<button id="todayBtn">Today</button>
+</div>
+<a class="toplink" href="#tbd">TBD &amp; On-Demand ↓</a>
+</div>
+<div class="legend"><span class="lp">In-Person</span><span class="lv">Virtual</span><span class="lh">Hybrid</span><span class="lmd">↳ = multi-day event, continued from its start date</span></div>
 
-  <div id="viewRoot"></div>
+<div id="viewRoot"></div>
 
-  <div class="section-title">Upcoming events</div>
-  <div class="list" id="upcoming"></div>
+<div class="section-title">Upcoming events</div>
+<div class="list" id="upcoming"></div>
 
-  <div id="tbd">
-    <div class="section-title">TBD &amp; On-Demand <span style="font-weight:400;text-transform:none;letter-spacing:0">— recently added (last 30 days)</span></div>
-    <div class="pill-row" id="tbdList"></div>
-  </div>
+<div id="tbd">
+<div class="section-title">TBD &amp; On-Demand <span style="font-weight:400;text-transform:none;letter-spacing:0">— recently added (last 30 days)</span></div>
+<div class="pill-row" id="tbdList"></div>
+</div>
 
-  <footer>Last updated <span id="updated"></span>. Details can change — always confirm with the event organizer.</footer>
+<footer>Last updated <span id="updated"></span>. Details can change — always confirm with the event organizer.</footer>
 </div>
 
 <div id="overlay">
-  <div id="detail">
-    <button id="closeBtn" aria-label="Close">✕</button>
-    <div id="detailBody"></div>
-  </div>
+<div id="detail">
+<button id="closeBtn" aria-label="Close">✕</button>
+<div id="detailBody"></div>
+</div>
 </div>
 
 <script>
 const LAST_UPDATED = "2026-07-03";
 const EVENTS = [
-  {name:"5 Essential Steps to Scaling AI in Your Organization",start:"2026-07-09",end:null,time:"",format:"Virtual",location:"",cost:"Free",desc:"A free live class led by SmarterX Founder/CEO Paul Roetzer covering critical AI trends for 2026, a framework for overcoming adoption obstacles, and how to build an AI-forward organization.",link:"https://academy.smarterx.ai/courses/5-essential-steps-to-scaling-ai-in-your-organization",onDemand:false,dateAdded:"2026-07-02"},
-  {name:"Artists and AI: Expanding the Creative Process",start:"2026-07-09",end:null,time:"11:15 AM–12:00 PM PDT",format:"Virtual",location:"",cost:"Free",desc:"An OpenAI Forum virtual livestream exploring how artists are expanding their creative process with AI.",link:"https://forum.openai.com/events/artists-and-ai-expanding-the-creative-process-nwgpnh2708",onDemand:false,dateAdded:"2026-06-30"},
-  {name:"ADK Master Class: Build AI Agents That Remember and Take Action",start:"2026-07-15",end:"2026-07-17",time:"",format:"Virtual",location:"",cost:"Free",desc:"Part of Google's AI Learning Labs series, a hands-on master class on building AI agents with memory and action-taking capabilities using Google's Agent Development Kit.",link:"https://ailearninglab.live",onDemand:false,dateAdded:"2026-07-01"},
-  {name:"Building Apps with AI Studio: Train the Trainer",start:"2026-07-15",end:null,time:"",format:"Virtual",location:"",cost:"Free",desc:"A Google Developer Groups session led by Luke Schlangen where participants build three AI Studio projects from scratch and learn facilitation techniques to train new builders in their communities. No experience required.",link:"",onDemand:false,dateAdded:"2026-07-01"},
-  {name:"Google AI Essentials Prep (Ivy Tech)",start:"2026-07-16",end:null,time:"9:00 AM–3:00 PM CT",format:"In-Person",location:"Ivy Tech Crown Point, 9900 Connecticut Dr, Crown Point, IN 46307",cost:"Free",desc:"No-cost, instructor-led roughly 5-hour workshop built on Google's AI Essentials curriculum, covering AI fundamentals, generative AI tools, basic prompting, and responsible AI use. No coding or technical background required; recurring sessions run statewide.",link:"https://www.ivytech.edu/classes/skills-training-classes/computers-and-it-comp/compgai1-google-ai-essentials-prep/",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"WEdesign Meeting: AI & Design (Josh Jeffrey)",start:"2026-07-16",end:null,time:"8:00–9:00 AM",format:"In-Person",location:"WunderKammer Company, 3402 Fairfield Ave, Fort Wayne, IN 46807",cost:"Not specified",desc:"A WEdesign Fort Wayne morning session where Josh Jeffrey introduces interior designers and architects to how AI and design intersect to create a competitive advantage.",link:"https://forms.gle/ChfWpyW6hHBGbQmr7",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"AI for Business Bootcamp (Columbus, OH)",start:"2026-07-16",end:null,time:"",format:"In-Person",location:"Hilton Columbus at Easton, Columbus, OH",cost:"Not specified",desc:"A one-day, two-track in-person bootcamp led by SmarterX's Paul Roetzer and Mike Kaput, combining expert instruction with structured exercises and real-world AI applications for businesses.",link:"https://smarterx.ai/events/ai-for-business-bootcamp-columbus",onDemand:false,dateAdded:"2026-07-02"},
-  {name:"AI Roadshows Across Indiana",start:"2026-07-21",end:null,time:"8:00–11:00 AM ET (unconfirmed for this stop)",format:"In-Person",location:"Indianapolis, IN (venue TBD)",cost:"Not specified (appears free)",desc:"Statewide series of half-day workshops moving Indiana business leaders from AI knowledge to action, part of Governor Braun's IN AI initiative (CICP). Multiple sessions run across Indiana cities from July through November 2026.",link:"https://www.cicpindiana.com/ai-roadshows/",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"Brick by Brick: Bringing AI to the Classroom",start:"2026-07-23",end:null,time:"Time TBD",format:"In-Person",location:"Purdue University, West Lafayette, IN",cost:"Free",desc:"One-day professional-development workshop for Indiana STEM educators (grades 6-8) using new LEGO Education Computer Science & AI kits, hosted by Purdue Science. Capped at 60 attendees; each educator receives take-home classroom materials.",link:"https://go.purdue.edu/LEGO-event",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"AI in CLE (SmarterX Networking Event)",start:"2026-07-23",end:null,time:"4:30–6:30 PM",format:"In-Person",location:"Greater Cleveland Partnership, 1240 Huron Rd. East, Cleveland, OH",cost:"Free",desc:"A free evening networking event hosted by SmarterX and Marketing AI Institute, featuring AI conversation and networking with Northeast Ohio professionals interested in AI.",link:"https://smarterx.ai/events/aiincle",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"TechPoint Community Connect: Building the Workforce AI Can't Replace",start:"2026-07-24",end:null,time:"9:00 AM–1:00 PM",format:"In-Person",location:"Indianapolis, IN",cost:"$25 with code ConnectMember (TechPoint network members)",desc:"A one-day conference bringing Indiana employers, educators, and TechPoint's 2026 Xtern cohort together to discuss AI's impact on the workforce. Includes panel discussions, small-group sessions, and a closing keynote on workforce and innovation readiness.",link:"https://techpoint.org/communityconnect/",onDemand:false,dateAdded:"2026-07-01"},
-  {name:"Intro to AI (Marketing AI Institute)",start:"2026-07-29",end:null,time:"",format:"Virtual",location:"",cost:"Free",desc:"A beginner-friendly class taught by Marketing AI Institute founder Paul Roetzer covering top AI use cases, a vendor evaluation framework, and a roadmap for piloting and scaling AI, followed by 30 minutes of live Q&A.",link:"https://academy.smarterx.ai/courses/intro-to-ai",onDemand:false,dateAdded:"2026-07-02"},
-  {name:"Building with Google Antigravity (AI Learning Labs)",start:"2026-07-29",end:"2026-07-31",time:"",format:"Virtual",location:"",cost:"Free",desc:"Part of Google's AI Learning Labs July series, a hands-on session on building with Google Antigravity.",link:"https://ailearninglab.live",onDemand:false,dateAdded:"2026-07-01"},
-  {name:"How to Make AI Search a Repeatable Pipeline Channel (Omnibound Webinar)",start:"2026-07-30",end:null,time:"12:00 PM ET",format:"Virtual",location:"",cost:"Free",desc:"A webinar featuring Omnibound AI Founder/CEO Al Lalani and SmarterX's Mike Kaput on how marketing teams can turn AI search visibility into a measurable, repeatable source of pipeline growth. Live or on-demand access available.",link:"https://www.marketingaiinstitute.com/omnibound-ai-search-growth-channel",onDemand:false,dateAdded:"2026-07-02"},
-  {name:"Quantum AI Conference 2026 (QNLPAI 2026)",start:"2026-08-14",end:"2026-08-16",time:"Time TBD",format:"In-Person",location:"IU Indianapolis Campus Center, 420 University Blvd, Indianapolis, IN 46202",cost:"Not specified",desc:"Academic conference co-organized with IU's Luddy School AI & NLP Lab covering AI for Quantum Computing, Quantum Computing for AI, and Quantum Natural Language Processing. Registration deadline is August 1, 2026.",link:"https://qnlp.ai/registration.html",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"Back to School AI Summit",start:"2026-09-08",end:"2026-09-09",time:"Time TBD",format:"Virtual",location:"",cost:"Free",desc:"A free virtual AI summit for educators, sponsored by AI Educator, held September 8-9, 2026 to help teachers prepare to bring AI into the new school year.",link:"https://summit.aieducator.tools/",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"MAICON 2026",start:"2026-10-13",end:"2026-10-15",time:"",format:"In-Person",location:"Huntington Convention Center, Cleveland, OH",cost:"Not specified",desc:"Marketing AI Institute's flagship three-day marketing AI conference, with multiple pass tiers including main conference, workshop access, and on-demand recordings.",link:"https://www.marketingaiinstitute.com/events/marketing-artificial-intelligence-conference",onDemand:false,dateAdded:"2026-07-02"},
-  {name:"Midwest AI Summit",start:"2026-10-15",end:null,time:"9:00 AM–5:00 PM ET",format:"In-Person",location:"The Crane Bay Event Center, 551 West Merrill Street, Indianapolis, IN 46225",cost:"Ticketed/paid event (includes lunch)",desc:"Enterprise-focused AI conference in Indianapolis featuring keynotes and panels from practitioners who have scaled AI in healthcare, life sciences, manufacturing, and agriculture. Includes an \"AI Engineering Lounge\" for 1:1 sessions with AI experts.",link:"https://www.eventbrite.com/e/midwest-ai-summit-tickets-1982802835657",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"GenAI Pre-Institute Workshop (Assessment Institute)",start:"2026-10-18",end:null,time:"Time TBD",format:"In-Person",location:"Indianapolis Marriott Downtown, Indianapolis, IN",cost:"$150 full-day / $75 half-day (plus Assessment Institute registration)",desc:"Pre-conference workshop led by Jerry Daday (IU Indianapolis) examining the challenges generative AI presents to educators and learners and how experiential learning and assessment must evolve. Held ahead of the Assessment Institute, October 18-20, 2026.",link:"https://assessmentinstitute.indianapolis.iu.edu/registration/index.html",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"Notre Dame AI Forum 2026",start:"2026-11-16",end:"2026-11-18",time:"Time TBD",format:"In-Person",location:"Morris Inn, University of Notre Dame, South Bend, IN",cost:"Not specified (registration \"coming soon\")",desc:"Gathering for higher-education IT leaders, CIOs/CISOs, and campus AI practitioners to discuss AI opportunities and challenges in teaching, research, and administration. Open to faculty and staff of any college, university, or nonprofit academic institution.",link:"https://ai.nd.edu/participate/ai-forum/",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"Indiana AI Innovation Network – November Network Meeting",start:"2026-11-18",end:null,time:"3:30–5:00 PM ET",format:"Hybrid",location:"Indiana Wesleyan University North Campus, Indianapolis, IN (virtual option available)",cost:"Not specified",desc:"TechPoint-run statewide AI innovator network meeting connecting Indiana AI practitioners, with both in-person and virtual attendance options.",link:"https://techpoint.org/ai-innovation-network/events/november-network-meeting-2026/",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"GenAI 101 (Indiana University)",start:null,end:null,time:"On-demand",format:"Virtual",location:"",cost:"Free",desc:"Free, self-paced generative AI skills course from Indiana University with 8 modules and 16 lessons (about 4-5 hours) covering prompt engineering, data storytelling, fact-checking AI content, and ethical AI use. Includes an AI learning agent (\"Crimson\") for support.",link:"https://go.iu.edu/genai101",onDemand:true,dateAdded:"2026-07-03"},
-  {name:"AI Tinkerers Fort Wayne — July Meetup",start:null,end:null,time:"7:00–9:00 PM ET (check-in 6:30 PM)",format:"In-Person",location:"Swizzle Market, Fort Wayne, IN",cost:"Free",desc:"Monthly hands-on meetup for AI engineers and builders featuring live project demos from local builders. Casual format with no pitches or slides.",link:"https://fort-wayne.aitinkerers.org/p/ai-fort-wayne-july-meetup-embrace-the-future-of-ai-together-at-swizzle-market",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"Mark Cuban Foundation Teacher Bootcamp",start:null,end:null,time:"Time TBD",format:"In-Person",location:"Location TBD",cost:"Free",desc:"A free national Teacher Bootcamp training program from the Mark Cuban Foundation, open to any U.S. high school educator; application deadline is July 10, 2026.",link:"https://markcubanai.org/teacherbootcamp/",onDemand:false,dateAdded:"2026-07-03"},
-  {name:"Curriculum Deep-Dives with Day of AI",start:null,end:null,time:"Time TBD",format:"Virtual",location:"",cost:"Free (to U.S. high school teachers)",desc:"Day of AI's Summer 2026 Curriculum Deep-Dives and Fall Communities of Practice help teachers master classroom-ready AI curriculum through virtual sessions running July and August 2026.",link:"https://dayofai.org/professional-development",onDemand:false,dateAdded:"2026-07-03"}
+{name:"5 Essential Steps to Scaling AI in Your Organization",start:"2026-07-09",end:null,time:"",format:"Virtual",location:"",cost:"Free",desc:"A free live class led by SmarterX Founder/CEO Paul Roetzer covering critical AI trends for 2026, a framework for overcoming adoption obstacles, and how to build an AI-forward organization.",link:"https://academy.smarterx.ai/courses/5-essential-steps-to-scaling-ai-in-your-organization",onDemand:false,dateAdded:"2026-07-02"},
+{name:"Artists and AI: Expanding the Creative Process",start:"2026-07-09",end:null,time:"11:15 AM–12:00 PM PDT",format:"Virtual",location:"",cost:"Free",desc:"An OpenAI Forum virtual livestream exploring how artists are expanding their creative process with AI.",link:"https://forum.openai.com/events/artists-and-ai-expanding-the-creative-process-nwgpnh2708",onDemand:false,dateAdded:"2026-06-30"},
+{name:"AI in Fort Wayne Meetup — July",start:"2026-07-10",end:null,time:"10–11 AM EST",format:"In-Person",location:"Indiana Tech Keene Building, 1600 E. Washington Blvd., Fort Wayne, IN 46803",cost:"Free",desc:"AI demos, conversations, and connections with an in-person Fort Wayne community learning AI together.",link:"https://www.eventbrite.com/o/angie-carel-gen-ai-consultant-educator-75959297953",onDemand:false,dateAdded:"2026-07-03"},
+{name:"ADK Master Class: Build AI Agents That Remember and Take Action",start:"2026-07-15",end:"2026-07-17",time:"",format:"Virtual",location:"",cost:"Free",desc:"Part of Google's AI Learning Labs series, a hands-on master class on building AI agents with memory and action-taking capabilities using Google's Agent Development Kit.",link:"https://ailearninglab.live",onDemand:false,dateAdded:"2026-07-01"},
+{name:"Building Apps with AI Studio: Train the Trainer",start:"2026-07-15",end:null,time:"",format:"Virtual",location:"",cost:"Free",desc:"A Google Developer Groups session led by Luke Schlangen where participants build three AI Studio projects from scratch and learn facilitation techniques to train new builders in their communities. No experience required.",link:"",onDemand:false,dateAdded:"2026-07-01"},
+{name:"Google AI Essentials Prep (Ivy Tech)",start:"2026-07-16",end:null,time:"9:00 AM–3:00 PM CT",format:"In-Person",location:"Ivy Tech Crown Point, 9900 Connecticut Dr, Crown Point, IN 46307",cost:"Free",desc:"No-cost, instructor-led roughly 5-hour workshop built on Google's AI Essentials curriculum, covering AI fundamentals, generative AI tools, basic prompting, and responsible AI use. No coding or technical background required; recurring sessions run statewide.",link:"https://www.ivytech.edu/classes/skills-training-classes/computers-and-it-comp/compgai1-google-ai-essentials-prep/",onDemand:false,dateAdded:"2026-07-03"},
+{name:"WEdesign Meeting: AI & Design (Josh Jeffrey)",start:"2026-07-16",end:null,time:"8:00–9:00 AM",format:"In-Person",location:"WunderKammer Company, 3402 Fairfield Ave, Fort Wayne, IN 46807",cost:"Not specified",desc:"A WEdesign Fort Wayne morning session where Josh Jeffrey introduces interior designers and architects to how AI and design intersect to create a competitive advantage.",link:"https://forms.gle/ChfWpyW6hHBGbQmr7",onDemand:false,dateAdded:"2026-07-03"},
+{name:"AI for Business Bootcamp (Columbus, OH)",start:"2026-07-16",end:null,time:"",format:"In-Person",location:"Hilton Columbus at Easton, Columbus, OH",cost:"Not specified",desc:"A one-day, two-track in-person bootcamp led by SmarterX's Paul Roetzer and Mike Kaput, combining expert instruction with structured exercises and real-world AI applications for businesses.",link:"https://smarterx.ai/events/ai-for-business-bootcamp-columbus",onDemand:false,dateAdded:"2026-07-02"},
+{name:"AI Roadshows Across Indiana",start:"2026-07-21",end:null,time:"8:00–11:00 AM ET (unconfirmed for this stop)",format:"In-Person",location:"Indianapolis, IN (venue TBD)",cost:"Not specified (appears free)",desc:"Statewide series of half-day workshops moving Indiana business leaders from AI knowledge to action, part of Governor Braun's IN AI initiative (CICP). Multiple sessions run across Indiana cities from July through November 2026.",link:"https://www.cicpindiana.com/ai-roadshows/",onDemand:false,dateAdded:"2026-07-03"},
+{name:"Brick by Brick: Bringing AI to the Classroom",start:"2026-07-23",end:null,time:"Time TBD",format:"In-Person",location:"Purdue University, West Lafayette, IN",cost:"Free",desc:"One-day professional-development workshop for Indiana STEM educators (grades 6-8) using new LEGO Education Computer Science & AI kits, hosted by Purdue Science. Capped at 60 attendees; each educator receives take-home classroom materials.",link:"https://go.purdue.edu/LEGO-event",onDemand:false,dateAdded:"2026-07-03"},
+{name:"AI in CLE (SmarterX Networking Event)",start:"2026-07-23",end:null,time:"4:30–6:30 PM",format:"In-Person",location:"Greater Cleveland Partnership, 1240 Huron Rd. East, Cleveland, OH",cost:"Free",desc:"A free evening networking event hosted by SmarterX and Marketing AI Institute, featuring AI conversation and networking with Northeast Ohio professionals interested in AI.",link:"https://smarterx.ai/events/aiincle",onDemand:false,dateAdded:"2026-07-03"},
+{name:"TechPoint Community Connect: Building the Workforce AI Can't Replace",start:"2026-07-24",end:null,time:"9:00 AM–1:00 PM",format:"In-Person",location:"Indianapolis, IN",cost:"$25 with code ConnectMember (TechPoint network members)",desc:"A one-day conference bringing Indiana employers, educators, and TechPoint's 2026 Xtern cohort together to discuss AI's impact on the workforce. Includes panel discussions, small-group sessions, and a closing keynote on workforce and innovation readiness.",link:"https://techpoint.org/communityconnect/",onDemand:false,dateAdded:"2026-07-01"},
+{name:"AI Tinkerers Fort Wayne — July Meetup",start:"2026-07-25",end:null,time:"10:00 AM",format:"In-Person",location:"Swizzle Market, Fort Wayne, IN",cost:"Free",desc:"Monthly hands-on meetup for AI engineers and builders featuring live project demos from local builders. Casual format with no pitches or slides.",link:"https://fort-wayne.aitinkerers.org/p/ai-fort-wayne-july-meetup-embrace-the-future-of-ai-together-at-swizzle-market",onDemand:false,dateAdded:"2026-07-03"},
+{name:"Intro to AI (Marketing AI Institute)",start:"2026-07-29",end:null,time:"",format:"Virtual",location:"",cost:"Free",desc:"A beginner-friendly class taught by Marketing AI Institute founder Paul Roetzer covering top AI use cases, a vendor evaluation framework, and a roadmap for piloting and scaling AI, followed by 30 minutes of live Q&A.",link:"https://academy.smarterx.ai/courses/intro-to-ai",onDemand:false,dateAdded:"2026-07-02"},
+{name:"Building with Google Antigravity (AI Learning Labs)",start:"2026-07-29",end:"2026-07-31",time:"",format:"Virtual",location:"",cost:"Free",desc:"Part of Google's AI Learning Labs July series, a hands-on session on building with Google Antigravity.",link:"https://ailearninglab.live",onDemand:false,dateAdded:"2026-07-01"},
+{name:"How to Make AI Search a Repeatable Pipeline Channel (Omnibound Webinar)",start:"2026-07-30",end:null,time:"12:00 PM ET",format:"Virtual",location:"",cost:"Free",desc:"A webinar featuring Omnibound AI Founder/CEO Al Lalani and SmarterX's Mike Kaput on how marketing teams can turn AI search visibility into a measurable, repeatable source of pipeline growth. Live or on-demand access available.",link:"https://www.marketingaiinstitute.com/omnibound-ai-search-growth-channel",onDemand:false,dateAdded:"2026-07-02"},
+{name:"AI in Fort Wayne Meetup — August",start:"2026-08-14",end:null,time:"10–11 AM EST",format:"In-Person",location:"Indiana Tech Keene Building, 1600 E. Washington Blvd., Fort Wayne, IN 46803",cost:"Free",desc:"AI demos, conversations, and connections with an in-person Fort Wayne community learning AI together.",link:"https://www.eventbrite.com/o/angie-carel-gen-ai-consultant-educator-75959297953",onDemand:false,dateAdded:"2026-07-03"},
+{name:"Quantum AI Conference 2026 (QNLPAI 2026)",start:"2026-08-14",end:"2026-08-16",time:"Time TBD",format:"In-Person",location:"IU Indianapolis Campus Center, 420 University Blvd, Indianapolis, IN 46202",cost:"Not specified",desc:"Academic conference co-organized with IU's Luddy School AI & NLP Lab covering AI for Quantum Computing, Quantum Computing for AI, and Quantum Natural Language Processing. Registration deadline is August 1, 2026.",link:"https://qnlp.ai/registration.html",onDemand:false,dateAdded:"2026-07-03"},
+{name:"Back to School AI Summit",start:"2026-09-08",end:"2026-09-09",time:"Time TBD",format:"Virtual",location:"",cost:"Free",desc:"A free virtual AI summit for educators, sponsored by AI Educator, held September 8-9, 2026 to help teachers prepare to bring AI into the new school year.",link:"https://summit.aieducator.tools/",onDemand:false,dateAdded:"2026-07-03"},
+{name:"AI in Fort Wayne Meetup — September",start:"2026-09-11",end:null,time:"10–11 AM EST",format:"In-Person",location:"Indiana Tech Keene Building, 1600 E. Washington Blvd., Fort Wayne, IN 46803",cost:"Free",desc:"AI demos, conversations, and connections with an in-person Fort Wayne community learning AI together.",link:"https://www.eventbrite.com/o/angie-carel-gen-ai-consultant-educator-75959297953",onDemand:false,dateAdded:"2026-07-03"},
+{name:"AI in Fort Wayne Meetup — October",start:"2026-10-09",end:null,time:"10–11 AM EST",format:"In-Person",location:"Indiana Tech Keene Building, 1600 E. Washington Blvd., Fort Wayne, IN 46803",cost:"Free",desc:"AI demos, conversations, and connections with an in-person Fort Wayne community learning AI together.",link:"https://www.eventbrite.com/o/angie-carel-gen-ai-consultant-educator-75959297953",onDemand:false,dateAdded:"2026-07-03"},
+{name:"MAICON 2026",start:"2026-10-13",end:"2026-10-15",time:"",format:"In-Person",location:"Huntington Convention Center, Cleveland, OH",cost:"Not specified",desc:"Marketing AI Institute's flagship three-day marketing AI conference, with multiple pass tiers including main conference, workshop access, and on-demand recordings.",link:"https://www.marketingaiinstitute.com/events/marketing-artificial-intelligence-conference",onDemand:false,dateAdded:"2026-07-02"},
+{name:"Midwest AI Summit",start:"2026-10-15",end:null,time:"9:00 AM–5:00 PM ET",format:"In-Person",location:"The Crane Bay Event Center, 551 West Merrill Street, Indianapolis, IN 46225",cost:"Ticketed/paid event (includes lunch)",desc:"Enterprise-focused AI conference in Indianapolis featuring keynotes and panels from practitioners who have scaled AI in healthcare, life sciences, manufacturing, and agriculture. Includes an \"AI Engineering Lounge\" for 1:1 sessions with AI experts.",link:"https://www.eventbrite.com/e/midwest-ai-summit-tickets-1982802835657",onDemand:false,dateAdded:"2026-07-03"},
+{name:"GenAI Pre-Institute Workshop (Assessment Institute)",start:"2026-10-18",end:null,time:"Time TBD",format:"In-Person",location:"Indianapolis Marriott Downtown, Indianapolis, IN",cost:"$150 full-day / $75 half-day (plus Assessment Institute registration)",desc:"Pre-conference workshop led by Jerry Daday (IU Indianapolis) examining the challenges generative AI presents to educators and learners and how experiential learning and assessment must evolve. Held ahead of the Assessment Institute, October 18-20, 2026.",link:"https://assessmentinstitute.indianapolis.iu.edu/registration/index.html",onDemand:false,dateAdded:"2026-07-03"},
+{name:"AI in Fort Wayne Meetup — November",start:"2026-11-13",end:null,time:"10–11 AM EST",format:"In-Person",location:"Indiana Tech Keene Building, 1600 E. Washington Blvd., Fort Wayne, IN 46803",cost:"Free",desc:"AI demos, conversations, and connections with an in-person Fort Wayne community learning AI together.",link:"https://www.eventbrite.com/o/angie-carel-gen-ai-consultant-educator-75959297953",onDemand:false,dateAdded:"2026-07-03"},
+{name:"Notre Dame AI Forum 2026",start:"2026-11-16",end:"2026-11-18",time:"Time TBD",format:"In-Person",location:"Morris Inn, University of Notre Dame, South Bend, IN",cost:"Not specified (registration \"coming soon\")",desc:"Gathering for higher-education IT leaders, CIOs/CISOs, and campus AI practitioners to discuss AI opportunities and challenges in teaching, research, and administration. Open to faculty and staff of any college, university, or nonprofit academic institution.",link:"https://ai.nd.edu/participate/ai-forum/",onDemand:false,dateAdded:"2026-07-03"},
+{name:"Indiana AI Innovation Network – November Network Meeting",start:"2026-11-18",end:null,time:"3:30–5:00 PM ET",format:"Hybrid",location:"Indiana Wesleyan University North Campus, Indianapolis, IN (virtual option available)",cost:"Not specified",desc:"TechPoint-run statewide AI innovator network meeting connecting Indiana AI practitioners, with both in-person and virtual attendance options.",link:"https://techpoint.org/ai-innovation-network/events/november-network-meeting-2026/",onDemand:false,dateAdded:"2026-07-03"},
+{name:"GenAI 101 (Indiana University)",start:null,end:null,time:"On-demand",format:"Virtual",location:"",cost:"Free",desc:"Free, self-paced generative AI skills course from Indiana University with 8 modules and 16 lessons (about 4-5 hours) covering prompt engineering, data storytelling, fact-checking AI content, and ethical AI use. Includes an AI learning agent (\"Crimson\") for support.",link:"https://go.iu.edu/genai101",onDemand:true,dateAdded:"2026-07-03"},
+{name:"Mark Cuban Foundation Teacher Bootcamp",start:null,end:null,time:"Time TBD",format:"In-Person",location:"Location TBD",cost:"Free",desc:"A free national Teacher Bootcamp training program from the Mark Cuban Foundation, open to any U.S. high school educator; application deadline is July 10, 2026.",link:"https://markcubanai.org/teacherbootcamp/",onDemand:false,dateAdded:"2026-07-03"},
+{name:"Curriculum Deep-Dives with Day of AI",start:null,end:null,time:"Time TBD",format:"Virtual",location:"",cost:"Free (to U.S. high school teachers)",desc:"Day of AI's Summer 2026 Curriculum Deep-Dives and Fall Communities of Practice help teachers master classroom-ready AI curriculum through virtual sessions running July and August 2026.",link:"https://dayofai.org/professional-development",onDemand:false,dateAdded:"2026-07-03"}
 ];
 
 (function () {
-  const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-  const DOWS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  const CHIP_CAP = 3;
-  const $ = (id) => document.getElementById(id);
-  const now = new Date();
-  const todayStr = dstr(now.getFullYear(), now.getMonth(), now.getDate());
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const DOWS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const CHIP_CAP = 3;
+const $ = (id) => document.getElementById(id);
+const now = new Date();
+const todayStr = dstr(now.getFullYear(), now.getMonth(), now.getDate());
 
-  let view = localStorage.getItem("aiEvView") || "month";
-  if (!["day","3day","week","month"].includes(view)) view = "month";
-  let anchor = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+let view = localStorage.getItem("aiEvView") || "month";
+if (!["day","3day","week","month"].includes(view)) view = "month";
+let anchor = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  $("updated").textContent = (function () {
-    const [y, m, d] = LAST_UPDATED.split("-").map(Number);
-    return MONTHS[m - 1] + " " + d + ", " + y;
-  })();
+$("updated").textContent = (function () {
+const [y, m, d] = LAST_UPDATED.split("-").map(Number);
+return MONTHS[m - 1] + " " + d + ", " + y;
+})();
 
-  function fmtClass(f) { return f === "In-Person" ? "inperson" : f === "Hybrid" ? "hybrid" : "virtual"; }
-  function fmtColor(f) { return { "In-Person": "var(--inperson)", "Virtual": "var(--virtual)", "Hybrid": "var(--hybrid)" }[f] || "var(--muted)"; }
-  function dstr(y, m, d) { return y + "-" + String(m + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0"); }
-  function isoOf(date) { return dstr(date.getFullYear(), date.getMonth(), date.getDate()); }
-  function niceDate(iso) { if (!iso) return ""; const [y, m, d] = iso.split("-").map(Number); return MONTHS[m - 1] + " " + d + ", " + y; }
-  function shortDate(iso) { const [, m, d] = iso.split("-").map(Number); return MONTHS[m - 1].slice(0, 3) + " " + d; }
-  function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
-  function startOfWeek(d) { const x = new Date(d); x.setDate(x.getDate() - x.getDay()); return x; }
-  function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+function fmtClass(f) { return f === "In-Person" ? "inperson" : f === "Hybrid" ? "hybrid" : "virtual"; }
+function fmtColor(f) { return { "In-Person": "var(--inperson)", "Virtual": "var(--virtual)", "Hybrid": "var(--hybrid)" }[f] || "var(--muted)"; }
+function dstr(y, m, d) { return y + "-" + String(m + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0"); }
+function isoOf(date) { return dstr(date.getFullYear(), date.getMonth(), date.getDate()); }
+function niceDate(iso) { if (!iso) return ""; const [y, m, d] = iso.split("-").map(Number); return MONTHS[m - 1] + " " + d + ", " + y; }
+function shortDate(iso) { const [, m, d] = iso.split("-").map(Number); return MONTHS[m - 1].slice(0, 3) + " " + d; }
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+function startOfWeek(d) { const x = new Date(d); x.setDate(x.getDate() - x.getDay()); return x; }
+function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
 
-  function eventsOn(iso) {
-    return EVENTS.map((ev, idx) => ({ ev, idx }))
-      .filter(x => x.ev.start && iso >= x.ev.start && iso <= (x.ev.end || x.ev.start));
-  }
+function eventsOn(iso) {
+return EVENTS.map((ev, idx) => ({ ev, idx }))
+.filter(x => x.ev.start && iso >= x.ev.start && iso <= (x.ev.end || x.ev.start));
+}
 
-  function updateLabel() {
-    const L = $("label");
-    if (view === "month") L.textContent = MONTHS[anchor.getMonth()] + " " + anchor.getFullYear();
-    else if (view === "day") L.textContent = niceDate(isoOf(anchor));
-    else {
-      const s = view === "week" ? startOfWeek(anchor) : anchor;
-      const e = addDays(s, view === "week" ? 6 : 2);
-      L.textContent = shortDate(isoOf(s)) + " – " + shortDate(isoOf(e)) + ", " + e.getFullYear();
-    }
-  }
+function updateLabel() {
+const L = $("label");
+if (view === "month") L.textContent = MONTHS[anchor.getMonth()] + " " + anchor.getFullYear();
+else if (view === "day") L.textContent = niceDate(isoOf(anchor));
+else {
+const s = view === "week" ? startOfWeek(anchor) : anchor;
+const e = addDays(s, view === "week" ? 6 : 2);
+L.textContent = shortDate(isoOf(s)) + " – " + shortDate(isoOf(e)) + ", " + e.getFullYear();
+}
+}
 
-  function render() {
-    document.querySelectorAll(".vbtn").forEach(b => b.classList.toggle("active", b.dataset.v === view));
-    localStorage.setItem("aiEvView", view);
-    updateLabel();
-    const root = $("viewRoot");
-    root.innerHTML = "";
-    if (view === "month") renderMonth(root);
-    else renderCols(root, view === "week" ? 7 : view === "3day" ? 3 : 1);
-  }
+function render() {
+document.querySelectorAll(".vbtn").forEach(b => b.classList.toggle("active", b.dataset.v === view));
+localStorage.setItem("aiEvView", view);
+updateLabel();
+const root = $("viewRoot");
+root.innerHTML = "";
+if (view === "month") renderMonth(root);
+else renderCols(root, view === "week" ? 7 : view === "3day" ? 3 : 1);
+}
 
-  function renderMonth(root) {
-    const grid = document.createElement("div");
-    grid.className = "grid";
-    DOWS.forEach(d => { const el = document.createElement("div"); el.className = "dow"; el.textContent = d; grid.appendChild(el); });
-    const y = anchor.getFullYear(), m = anchor.getMonth();
-    const startPad = new Date(y, m, 1).getDay();
-    const daysInMonth = new Date(y, m + 1, 0).getDate();
-    const totalCells = Math.ceil((startPad + daysInMonth) / 7) * 7;
-    for (let i = 0; i < totalCells; i++) {
-      const cell = document.createElement("div");
-      const dayNum = i - startPad + 1;
-      if (dayNum < 1 || dayNum > daysInMonth) { cell.className = "day out"; }
-      else {
-        const iso = dstr(y, m, dayNum);
-        cell.className = "day" + (iso === todayStr ? " today" : "");
-        const num = document.createElement("span");
-        num.className = "num"; num.textContent = dayNum;
-        cell.appendChild(num);
-        const evs = eventsOn(iso);
-        evs.slice(0, CHIP_CAP).forEach(({ ev, idx }) => {
-          const chip = document.createElement("button");
-          chip.className = "chip " + fmtClass(ev.format) + (iso !== ev.start ? " cont" : "");
-          chip.textContent = (iso !== ev.start ? "↳ " : "") + ev.name;
-          chip.title = ev.name;
-          chip.onclick = () => showDetail(idx);
-          cell.appendChild(chip);
-        });
-        if (evs.length > CHIP_CAP) {
-          const more = document.createElement("button");
-          more.className = "more";
-          more.textContent = "+" + (evs.length - CHIP_CAP) + " more";
-          more.onclick = () => { view = "day"; anchor = new Date(y, m, dayNum); render(); };
-          cell.appendChild(more);
-        }
-      }
-      grid.appendChild(cell);
-    }
-    root.appendChild(grid);
-  }
+function renderMonth(root) {
+const grid = document.createElement("div");
+grid.className = "grid";
+DOWS.forEach(d => { const el = document.createElement("div"); el.className = "dow"; el.textContent = d; grid.appendChild(el); });
+const y = anchor.getFullYear(), m = anchor.getMonth();
+const startPad = new Date(y, m, 1).getDay();
+const daysInMonth = new Date(y, m + 1, 0).getDate();
+const totalCells = Math.ceil((startPad + daysInMonth) / 7) * 7;
+for (let i = 0; i < totalCells; i++) {
+const cell = document.createElement("div");
+const dayNum = i - startPad + 1;
+if (dayNum < 1 || dayNum > daysInMonth) { cell.className = "day out"; }
+else {
+const iso = dstr(y, m, dayNum);
+cell.className = "day" + (iso === todayStr ? " today" : "");
+const num = document.createElement("span");
+num.className = "num"; num.textContent = dayNum;
+cell.appendChild(num);
+const evs = eventsOn(iso);
+evs.slice(0, CHIP_CAP).forEach(({ ev, idx }) => {
+const chip = document.createElement("button");
+chip.className = "chip " + fmtClass(ev.format) + (iso !== ev.start ? " cont" : "");
+chip.textContent = (iso !== ev.start ? "↳ " : "") + ev.name;
+chip.title = ev.name;
+chip.onclick = () => showDetail(idx);
+cell.appendChild(chip);
+});
+if (evs.length > CHIP_CAP) {
+const more = document.createElement("button");
+more.className = "more";
+more.textContent = "+" + (evs.length - CHIP_CAP) + " more";
+more.onclick = () => { view = "day"; anchor = new Date(y, m, dayNum); render(); };
+cell.appendChild(more);
+}
+}
+grid.appendChild(cell);
+}
+root.appendChild(grid);
+}
 
-  function renderCols(root, n) {
-    const s = n === 7 ? startOfWeek(anchor) : new Date(anchor);
-    const cols = document.createElement("div");
-    cols.className = "cols";
-    cols.style.gridTemplateColumns = "repeat(" + n + ", 1fr)";
-    for (let i = 0; i < n; i++) {
-      const d = addDays(s, i);
-      const iso = isoOf(d);
-      const col = document.createElement("div");
-      col.className = "col" + (iso === todayStr ? " today" : "");
-      const h = document.createElement("h3");
-      h.textContent = DOWS[d.getDay()] + " · " + shortDate(iso);
-      col.appendChild(h);
-      const evs = eventsOn(iso);
-      if (!evs.length) {
-        const e = document.createElement("div");
-        e.className = "empty"; e.textContent = "No events";
-        col.appendChild(e);
-      } else {
-        evs.forEach(({ ev, idx }) => {
-          const card = document.createElement("button");
-          card.className = "ecard";
-          card.style.borderLeftColor = fmtColor(ev.format);
-          let meta = [ev.time, ev.format, ev.location].filter(Boolean).join(" · ");
-          card.innerHTML = '<div class="t">' + esc(ev.name) + '</div>' + (meta ? '<div class="m">' + esc(meta) + "</div>" : "");
-          card.onclick = () => showDetail(idx);
-          col.appendChild(card);
-        });
-      }
-      cols.appendChild(col);
-    }
-    root.appendChild(cols);
-  }
+function renderCols(root, n) {
+const s = n === 7 ? startOfWeek(anchor) : new Date(anchor);
+const cols = document.createElement("div");
+cols.className = "cols";
+cols.style.gridTemplateColumns = "repeat(" + n + ", 1fr)";
+for (let i = 0; i < n; i++) {
+const d = addDays(s, i);
+const iso = isoOf(d);
+const col = document.createElement("div");
+col.className = "col" + (iso === todayStr ? " today" : "");
+const h = document.createElement("h3");
+h.textContent = DOWS[d.getDay()] + " · " + shortDate(iso);
+col.appendChild(h);
+const evs = eventsOn(iso);
+if (!evs.length) {
+const e = document.createElement("div");
+e.className = "empty"; e.textContent = "No events";
+col.appendChild(e);
+} else {
+evs.forEach(({ ev, idx }) => {
+const card = document.createElement("button");
+card.className = "ecard";
+card.style.borderLeftColor = fmtColor(ev.format);
+let meta = [ev.time, ev.format, ev.location].filter(Boolean).join(" · ");
+card.innerHTML = '<div class="t">' + esc(ev.name) + '</div>' + (meta ? '<div class="m">' + esc(meta) + "</div>" : "");
+card.onclick = () => showDetail(idx);
+col.appendChild(card);
+});
+}
+cols.appendChild(col);
+}
+root.appendChild(cols);
+}
 
-  function renderUpcoming() {
-    const up = $("upcoming");
-    up.innerHTML = "";
-    EVENTS.map((ev, idx) => ({ ev, idx }))
-      .filter(x => x.ev.start && (x.ev.end || x.ev.start) >= todayStr)
-      .sort((a, b) => a.ev.start.localeCompare(b.ev.start))
-      .forEach(({ ev, idx }) => {
-        const b = document.createElement("button");
-        b.className = "item";
-        b.innerHTML = '<span class="d">' + shortDate(ev.start) + (ev.end ? "–" + shortDate(ev.end) : "") + '</span><span class="n">' + esc(ev.name) + '</span><span class="f">' + esc(ev.format) + "</span>";
-        b.onclick = () => showDetail(idx);
-        up.appendChild(b);
-      });
-  }
+function renderUpcoming() {
+const up = $("upcoming");
+up.innerHTML = "";
+EVENTS.map((ev, idx) => ({ ev, idx }))
+.filter(x => x.ev.start && (x.ev.end || x.ev.start) >= todayStr)
+.sort((a, b) => a.ev.start.localeCompare(b.ev.start))
+.forEach(({ ev, idx }) => {
+const b = document.createElement("button");
+b.className = "item";
+b.innerHTML = '<span class="d">' + shortDate(ev.start) + (ev.end ? "–" + shortDate(ev.end) : "") + '</span><span class="n">' + esc(ev.name) + '</span><span class="f">' + esc(ev.format) + "</span>";
+b.onclick = () => showDetail(idx);
+up.appendChild(b);
+});
+}
 
-  function renderTbd() {
-    const listEl = $("tbdList");
-    listEl.innerHTML = "";
-    const cutoffMs = 30 * 86400000;
-    const items = EVENTS.map((ev, idx) => ({ ev, idx })).filter(x => {
-      if (x.ev.start && !x.ev.onDemand) return false;
-      if (!x.ev.dateAdded) return true;
-      return (Date.now() - Date.parse(x.ev.dateAdded)) <= cutoffMs;
-    });
-    if (!items.length) {
-      const e = document.createElement("div");
-      e.className = "empty"; e.textContent = "Nothing new in the last 30 days.";
-      listEl.appendChild(e);
-      return;
-    }
-    items.forEach(({ ev, idx }) => {
-      const b = document.createElement("button");
-      b.className = "pill";
-      b.innerHTML = '<span class="tag">' + (ev.onDemand ? "ON-DEMAND" : "TBD") + "</span>";
-      b.appendChild(document.createTextNode(ev.name));
-      const added = document.createElement("span");
-      added.className = "added";
-      added.textContent = "added " + shortDate(ev.dateAdded);
-      b.appendChild(added);
-      b.onclick = () => showDetail(idx);
-      listEl.appendChild(b);
-    });
-  }
+function renderTbd() {
+const listEl = $("tbdList");
+listEl.innerHTML = "";
+const cutoffMs = 30 * 86400000;
+const items = EVENTS.map((ev, idx) => ({ ev, idx })).filter(x => {
+if (x.ev.start && !x.ev.onDemand) return false;
+if (!x.ev.dateAdded) return true;
+return (Date.now() - Date.parse(x.ev.dateAdded)) <= cutoffMs;
+});
+if (!items.length) {
+const e = document.createElement("div");
+e.className = "empty"; e.textContent = "Nothing new in the last 30 days.";
+listEl.appendChild(e);
+return;
+}
+items.forEach(({ ev, idx }) => {
+const b = document.createElement("button");
+b.className = "pill";
+b.innerHTML = '<span class="tag">' + (ev.onDemand ? "ON-DEMAND" : "TBD") + "</span>";
+b.appendChild(document.createTextNode(ev.name));
+const added = document.createElement("span");
+added.className = "added";
+added.textContent = "added " + shortDate(ev.dateAdded);
+b.appendChild(added);
+b.onclick = () => showDetail(idx);
+listEl.appendChild(b);
+});
+}
 
-  function showDetail(idx) {
-    const ev = EVENTS[idx];
-    let when = ev.start ? niceDate(ev.start) : (ev.onDemand ? "On-demand" : "Date TBD");
-    if (ev.end) when += " – " + niceDate(ev.end);
-    let html = "";
-    if (ev.format) html += '<span class="fmt-badge" style="background:' + fmtColor(ev.format) + '">' + esc(ev.format) + "</span>";
-    html += "<h2>" + esc(ev.name) + "</h2>";
-    html += '<div class="meta"><b>When:</b> ' + esc(when) + (ev.time ? " · " + esc(ev.time) : "") + "</div>";
-    if (ev.location) html += '<div class="meta"><b>Where:</b> ' + esc(ev.location) + "</div>";
-    if (ev.cost) html += '<div class="meta"><b>Cost:</b> ' + esc(ev.cost) + "</div>";
-    if (ev.desc) html += '<p class="desc">' + esc(ev.desc) + "</p>";
-    if (ev.link) html += '<div class="links"><a href="' + esc(ev.link) + '" target="_blank" rel="noopener">Register / Learn more ↗</a></div>';
-    else html += '<p class="nolink">Registration details available from the event organizer.</p>';
-    $("detailBody").innerHTML = html;
-    $("overlay").classList.add("show");
-  }
+function showDetail(idx) {
+const ev = EVENTS[idx];
+let when = ev.start ? niceDate(ev.start) : (ev.onDemand ? "On-demand" : "Date TBD");
+if (ev.end) when += " – " + niceDate(ev.end);
+let html = "";
+if (ev.format) html += '<span class="fmt-badge" style="background:' + fmtColor(ev.format) + '">' + esc(ev.format) + "</span>";
+html += "<h2>" + esc(ev.name) + "</h2>";
+html += '<div class="meta"><b>When:</b> ' + esc(when) + (ev.time ? " · " + esc(ev.time) : "") + "</div>";
+if (ev.location) html += '<div class="meta"><b>Where:</b> ' + esc(ev.location) + "</div>";
+if (ev.cost) html += '<div class="meta"><b>Cost:</b> ' + esc(ev.cost) + "</div>";
+if (ev.desc) html += '<p class="desc">' + esc(ev.desc) + "</p>";
+if (ev.link) html += '<div class="links"><a href="' + esc(ev.link) + '" target="_blank" rel="noopener">Register / Learn more ↗</a></div>';
+else html += '<p class="nolink">Registration details available from the event organizer.</p>';
+$("detailBody").innerHTML = html;
+$("overlay").classList.add("show");
+}
 
-  $("closeBtn").onclick = () => $("overlay").classList.remove("show");
-  $("overlay").onclick = (e) => { if (e.target === $("overlay")) $("overlay").classList.remove("show"); };
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("overlay").classList.remove("show"); });
+$("closeBtn").onclick = () => $("overlay").classList.remove("show");
+$("overlay").onclick = (e) => { if (e.target === $("overlay")) $("overlay").classList.remove("show"); };
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("overlay").classList.remove("show"); });
 
-  document.querySelectorAll(".vbtn").forEach(b => b.onclick = () => { view = b.dataset.v; render(); });
-  function step(dir) {
-    if (view === "month") anchor = new Date(anchor.getFullYear(), anchor.getMonth() + dir, 1);
-    else anchor = addDays(anchor, dir * (view === "week" ? 7 : view === "3day" ? 3 : 1));
-    render();
-  }
-  $("prev").onclick = () => step(-1);
-  $("next").onclick = () => step(1);
-  $("todayBtn").onclick = () => { anchor = new Date(now.getFullYear(), now.getMonth(), now.getDate()); render(); };
+document.querySelectorAll(".vbtn").forEach(b => b.onclick = () => { view = b.dataset.v; render(); });
+function step(dir) {
+if (view === "month") anchor = new Date(anchor.getFullYear(), anchor.getMonth() + dir, 1);
+else anchor = addDays(anchor, dir * (view === "week" ? 7 : view === "3day" ? 3 : 1));
+render();
+}
+$("prev").onclick = () => step(-1);
+$("next").onclick = () => step(1);
+$("todayBtn").onclick = () => { anchor = new Date(now.getFullYear(), now.getMonth(), now.getDate()); render(); };
 
-  render();
-  renderUpcoming();
-  renderTbd();
+render();
+renderUpcoming();
+renderTbd();
 })();
 </script>
 </body>
